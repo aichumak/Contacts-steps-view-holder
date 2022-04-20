@@ -43,8 +43,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
-        viewModel?.updateContactList()
-        contactListAdapter = ContactListAdapter(fragmentNavigator, clickListener)
+        contactListAdapter = ContactListAdapter(viewModel, fragmentNavigator, clickListener)
         binding?.let {
             it.rvContactList.layoutManager = LinearLayoutManager(context)
             it.rvContactList.adapter = contactListAdapter
@@ -56,39 +55,48 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         viewModel?.contactList?.observe(viewLifecycleOwner) {
             contactListAdapter?.submitList(it)
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu, menu)
         val searchItem = menu.findItem(R.id.search_action)
         val searchView = searchItem.actionView as SearchView
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
+        viewModel?.let {
+            if (it.savedSearchText.isNotEmpty()) {
+                searchItem.expandActionView()
+                searchView.setQuery(viewModel?.savedSearchText as CharSequence, true)
             }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                viewModel?.updateContactList()
-                val contactList = viewModel?.contactList
-                val searchText = p0?.lowercase(Locale.getDefault()) ?: ""
-                val newContactList = sortedSetOf<Contact>({ o1, o2 -> o1.id.compareTo(o2.id) })
-
-                if (searchText.isNotEmpty()) {
-                    contactList?.value?.forEach {
-                        if (it.firstName.lowercase(Locale.getDefault()).contains(searchText) ||
-                            it.lastName.lowercase(Locale.getDefault()).contains(searchText)
-                        ) {
-                            newContactList.add(it)
-                        }
-                    }
-                    viewModel?.replaceContactListForSearch(newContactList)
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return false
                 }
 
-                return false
-            }
-        })
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    it.updateContactList()
+                    val contactList = it.contactList
+                    val searchText = p0?.lowercase(Locale.getDefault()) ?: ""
+                    val newContactList =
+                        sortedSetOf<Contact>({ o1, o2 -> o1.id.compareTo(o2.id) })
+
+                    if (searchText.isNotEmpty()) {
+                        contactList.value?.forEach { itValue ->
+                            if (itValue.firstName.lowercase(Locale.getDefault())
+                                    .contains(searchText) ||
+                                itValue.lastName.lowercase(Locale.getDefault()).contains(searchText)
+                            ) {
+                                newContactList.add(itValue)
+                            }
+                        }
+                        it.replaceContactListForSearch(newContactList)
+                        it.savedSearchText = searchText
+                    }
+                    return false
+                }
+            })
+        }
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     companion object {

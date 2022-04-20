@@ -14,6 +14,8 @@ class ContactListViewModel : ViewModel() {
     private val updateDataBaseLiveDataUseCase = UpdateDataBaseLiveDataUseCase(repository)
     private val replaceContactListForSearchUseCase = ReplaceContactListForSearchUseCase(repository)
 
+    var savedSearchText = ""
+
     val contactList = getContactListUseCase.getContactList()
 
     fun updateContactList() {

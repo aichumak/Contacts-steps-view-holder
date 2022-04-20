@@ -14,6 +14,7 @@ import com.example.contacts.domain.Contact
 import com.example.contacts.domain.GetContactListUseCase
 
 class ContactListAdapter(
+    private val viewModel: ContactListViewModel? = null,
     private val fragmentNavigator: FragmentNavigator? = null,
     private val clickListener: ClickListener? = null
 ) : androidx.recyclerview.widget.ListAdapter<Contact, ContactViewHolder>(ContactDiffCallback()) {
@@ -34,6 +35,7 @@ class ContactListAdapter(
             phoneNumber.text = contact.phoneNumber.toString()
             itemView.setOnClickListener {
                 fragmentNavigator?.goFromContactListFragmentToContactFragment(contact.id)
+                viewModel?.savedSearchText = ""
             }
             itemView.setOnLongClickListener {
                 clickListener?.removeContact(contact.id)
