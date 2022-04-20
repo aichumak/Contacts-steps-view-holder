@@ -1,7 +1,6 @@
 package com.example.contacts.presentation
 
 import android.graphics.drawable.Drawable
-import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide

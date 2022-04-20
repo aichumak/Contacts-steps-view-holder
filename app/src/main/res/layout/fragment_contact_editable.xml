@@ -22,9 +22,9 @@
                 android:id="@+id/contact_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="centerInside"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:scaleType="centerInside" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,10 +70,10 @@
                 android:id="@+id/et_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="0,1,2,3,4,5,6,7,8,9"
+                android:inputType="text"
                 android:textColor="@color/gray"
                 android:textSize="30sp"
-                android:inputType="text"
-                android:digits="0,1,2,3,4,5,6,7,8,9"
                 tools:ignore="SpeakableTextPresentCheck,TextFields" />
 
             <Button
