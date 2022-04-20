@@ -4,4 +4,11 @@
     <string name="last_name">Last name:</string>
     <string name="phone_number">phone:</string>
     <string name="button_save_label">Save</string>
+    <string name="web_address">https://picsum.photos/id/</string>
+    <string name="confirm_dialog_title">Warning!</string>
+    <string name="confirm_dialog_message">Delete this contact?</string>
+    <string name="confirm_dialog_negative_button">Cancel</string>
+    <string name="confirm_dialog_positive_button">Remove</string>
+    <string name="remove_canceled">Canceled</string>
+    <string name="search">Search</string>
 </resources>

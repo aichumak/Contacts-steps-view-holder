@@ -4,15 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.contacts.domain.Contact
 import com.example.contacts.domain.ContactListRepository
+import java.util.*
 
 object ContactListRepositoryImpl : ContactListRepository {
 
     private var dataBaseLiveData = MutableLiveData<List<Contact>>()
-    private val dataBase = sortedSetOf<Contact>({ o1, o2 -> o1.id.compareTo(o2.id) })
+    private var dataBase = sortedSetOf<Contact>({ o1, o2 -> o1.id.compareTo(o2.id) })
 
     init {
-        for (i in 0 until 9) {
-            dataBase.add(Contact(i, "Mike$i", "Jordan$i", (1452580 + i)))
+        for (i in 0 until 110) {
+            dataBase.add(
+                Contact(
+                    i,
+                    "Mike$i",
+                    "Jordan$i",
+                    (1452580 + i).toLong(),
+                    "https://picsum.photos/id/$i/300/300"
+                )
+            )
         }
         updateDataBaseLiveData()
     }
@@ -34,7 +43,17 @@ object ContactListRepositoryImpl : ContactListRepository {
         } ?: throw RuntimeException("Contact with id:$contactId not found")
     }
 
-    private fun updateDataBaseLiveData() {
+    override fun removeContact(contact: Contact) {
+        dataBase.remove(contact)
+        updateDataBaseLiveData()
+    }
+
+    override fun updateDataBaseLiveData() {
         dataBaseLiveData.value = dataBase.toList()
     }
+
+    override fun replaceContactListForSearch(newContactList: TreeSet<Contact>) {
+        dataBaseLiveData.value = newContactList.toList()
+    }
+
 }

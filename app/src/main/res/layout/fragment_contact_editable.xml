@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,12 +9,22 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/contact_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,7 +72,9 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray"
                 android:textSize="30sp"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:inputType="text"
+                android:digits="0,1,2,3,4,5,6,7,8,9"
+                tools:ignore="SpeakableTextPresentCheck,TextFields" />
 
             <Button
                 android:id="@+id/save_button"
