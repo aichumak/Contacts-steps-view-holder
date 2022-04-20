@@ -42,6 +42,8 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
+        viewModel?.updateContactList()
         contactListAdapter = ContactListAdapter(fragmentNavigator, clickListener)
         binding?.let {
             it.rvContactList.layoutManager = LinearLayoutManager(context)
@@ -51,7 +53,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
                 it.rvContactList.addItemDecoration(ItemDecoration(itDivider))
             }
         }
-        viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
         viewModel?.contactList?.observe(viewLifecycleOwner) {
             contactListAdapter?.submitList(it)
         }
