@@ -47,9 +47,7 @@ class ContactFragment : Fragment(R.layout.fragment_contact_editable) {
                 itBinding.etPhoneNumber.setText(contact?.phoneNumber.toString())
                 itBinding.saveButton.setOnClickListener {
                     if (contact != null) {
-                        //val ab = itBinding.etPhoneNumber.text
                         viewModel?.editContact(
-
                             Contact(
                                 contact.id,
                                 itBinding.etFirstName.text.toString(),

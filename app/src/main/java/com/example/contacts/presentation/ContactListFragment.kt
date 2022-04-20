@@ -65,7 +65,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                TODO("Not yet implemented")
+                return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
