@@ -8,5 +8,6 @@ data class Contact(
     val id: Int,
     val firstName: String,
     val lastName: String,
-    val phoneNumber: Int
+    val phoneNumber: Long,
+    val contactImageViewURL: String
 ) : Parcelable
