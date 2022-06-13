@@ -1,13 +1,16 @@
 package com.example.contacts.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.example.contacts.R
+import com.example.contacts.presentation.BaseItem
 
-@Parcelize
 data class Contact(
     val id: Int,
     val firstName: String,
     val lastName: String,
     val phoneNumber: Long,
     val contactImageViewURL: String
-) : Parcelable
+) : BaseItem {
+    override fun getViewType(): Int {
+        return R.layout.fragment_contact
+    }
+}

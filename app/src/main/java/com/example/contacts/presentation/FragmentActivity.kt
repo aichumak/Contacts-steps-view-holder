@@ -39,7 +39,7 @@ class FragmentActivity : AppCompatActivity(), FragmentNavigator, ClickListener {
             val tag = backEntry.name
             supportFragmentManager.popBackStack(tag, 0)
         }
-        invalidateOptionsMenu()
+        //invalidateOptionsMenu()
     }
 
     override fun onBackPressed() {

@@ -12,5 +12,21 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+gradle.ext.roboswag = [
+        'utils',
+        'logging',
+        'storable',
+        'recyclerview-adapters',
+        'kotlin-extensions',
+]
+
+gradle.ext.roboswag.forEach { module ->
+    include ":$module"
+    project(":$module").projectDir = file("RoboSwag/$module")
+}
+
 rootProject.name = "Contacts"
 include ':app'
+
+

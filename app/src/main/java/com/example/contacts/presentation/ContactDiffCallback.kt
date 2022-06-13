@@ -1,14 +1,17 @@
 package com.example.contacts.presentation
 
-import androidx.recyclerview.widget.DiffUtil
 import com.example.contacts.domain.Contact
 
-class ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {
-    override fun areItemsTheSame(oldContact: Contact, newContact: Contact): Boolean {
-        return oldContact.id == newContact.id
+class ContactDiffCallback : DefaultDiffUtil() {
+    override fun areItemsTheSame(oldItem: BaseItem, newItem: BaseItem): Boolean {
+        val _oldItem = oldItem as Contact
+        val _newItem = newItem as Contact
+        return _oldItem.id == _newItem.id
     }
 
-    override fun areContentsTheSame(oldContact: Contact, newContact: Contact): Boolean {
-        return oldContact == newContact
+    override fun areContentsTheSame(oldItem: BaseItem, newItem: BaseItem): Boolean {
+        val _oldItem = oldItem as Contact
+        val _newItem = newItem as Contact
+        return _oldItem == _newItem
     }
 }

@@ -3,10 +3,12 @@ package com.example.contacts.presentation
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.BaseAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contacts.R
 import com.example.contacts.databinding.FragmentContactListBinding
@@ -18,7 +20,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     private var fragmentNavigator: FragmentNavigator? = null
     private var clickListener: ClickListener? = null
     private var viewModel: ContactListViewModel? = null
-    private var contactListAdapter: ContactListAdapter? = null
+    //private var contactListAdapter: ContactListAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,19 +45,19 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
-        contactListAdapter = ContactListAdapter(viewModel, fragmentNavigator, clickListener)
+        val delegateAdapter = DelegateAdapter(ContactDiffCallback(), ContactViewHolder())
+
         binding?.let {
             it.rvContactList.layoutManager = LinearLayoutManager(context)
-            it.rvContactList.adapter = contactListAdapter
+            it.rvContactList.adapter = delegateAdapter
             val divider = ContextCompat.getDrawable(view.context, R.drawable.item_decoration)
             divider?.let { itDivider ->
                 it.rvContactList.addItemDecoration(ItemDecoration(itDivider))
             }
         }
         viewModel?.contactList?.observe(viewLifecycleOwner) {
-            contactListAdapter?.submitList(it)
+            delegateAdapter.submitList(it)
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

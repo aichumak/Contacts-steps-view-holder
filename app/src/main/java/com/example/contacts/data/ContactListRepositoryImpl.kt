@@ -20,6 +20,7 @@ object ContactListRepositoryImpl : ContactListRepository {
                     "Jordan$i",
                     (1452580 + i).toLong(),
                     "https://picsum.photos/id/$i/300/300"
+
                 )
             )
         }

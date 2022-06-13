@@ -54,6 +54,7 @@ class ContactFragment : Fragment(R.layout.fragment_contact_editable) {
                                 itBinding.etLastName.text.toString(),
                                 itBinding.etPhoneNumber.text.toString().toLong(),
                                 contact.contactImageViewURL
+
                             )
                         )
                         fragmentNavigator?.goFromContactFragmentToContactListFragment()
