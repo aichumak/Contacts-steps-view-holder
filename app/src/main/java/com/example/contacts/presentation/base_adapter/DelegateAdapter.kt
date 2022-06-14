@@ -1,10 +1,10 @@
-package com.example.contacts.presentation
+package com.example.contacts.presentation.base_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
 class DelegateAdapter(
-    diffUtilCallback: DefaultDiffUtil,
+    diffUtilCallback: BaseDiffUtil,
     vararg args: BaseViewHolder
 ) : androidx.recyclerview.widget.ListAdapter<BaseItem, BaseViewHolder.ViewHolder>(
     diffUtilCallback
@@ -30,7 +30,7 @@ class DelegateAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).getViewType()
+        return ViewTypes.getViewType(getItem(position))
     }
 }
 

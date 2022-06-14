@@ -1,4 +1,4 @@
-package com.example.contacts.presentation
+package com.example.contacts.presentation.base_adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

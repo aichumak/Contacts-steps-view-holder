@@ -1,7 +1,6 @@
 package com.example.contacts.domain
 
-import com.example.contacts.R
-import com.example.contacts.presentation.BaseItem
+import com.example.contacts.presentation.base_adapter.BaseItem
 
 data class Contact(
     val id: Int,
@@ -9,8 +8,4 @@ data class Contact(
     val lastName: String,
     val phoneNumber: Long,
     val contactImageViewURL: String
-) : BaseItem {
-    override fun getViewType(): Int {
-        return R.layout.fragment_contact
-    }
-}
+) : BaseItem

@@ -3,16 +3,15 @@ package com.example.contacts.presentation
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.widget.BaseAdapter
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contacts.R
 import com.example.contacts.databinding.FragmentContactListBinding
 import com.example.contacts.domain.Contact
+import com.example.contacts.presentation.base_adapter.DelegateAdapter
 import java.util.*
 
 class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
@@ -45,11 +44,14 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
-        val delegateAdapter = DelegateAdapter(ContactDiffCallback(), ContactViewHolder())
+
+        val delegateAdapter = DelegateAdapter(ContactDiffCallback(), ContactViewHolder(), ContactViewHolder2())
+        val baseAdapter = com.example.contacts.presentation.base_adapter.BaseAdapter
+        baseAdapter.addDelegateAdapter(delegateAdapter)
 
         binding?.let {
             it.rvContactList.layoutManager = LinearLayoutManager(context)
-            it.rvContactList.adapter = delegateAdapter
+            it.rvContactList.adapter = baseAdapter.getBaseAdapter()
             val divider = ContextCompat.getDrawable(view.context, R.drawable.item_decoration)
             divider?.let { itDivider ->
                 it.rvContactList.addItemDecoration(ItemDecoration(itDivider))

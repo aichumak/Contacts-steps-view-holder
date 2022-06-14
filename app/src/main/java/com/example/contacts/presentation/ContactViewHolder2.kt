@@ -14,10 +14,10 @@ import com.example.contacts.presentation.base_adapter.BaseItem
 import com.example.contacts.presentation.base_adapter.BaseViewHolder
 import com.example.contacts.presentation.base_adapter.ViewTypes
 
-class ContactViewHolder : BaseViewHolder {
+class ContactViewHolder2 : BaseViewHolder {
 
     override val viewType: Int
-        get() = ViewTypes.CONTACT_VIEW_HOLDER1.viewType
+        get() = ViewTypes.CONTACT_VIEW_HOLDER2.viewType
 
     override fun getViewHolder(itemView: View) = object : BaseViewHolder.ViewHolder(itemView) {
         val firstName: TextView = itemView.findViewById(R.id.tv_first_name)
