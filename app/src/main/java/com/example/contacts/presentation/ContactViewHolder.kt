@@ -14,10 +14,11 @@ import com.example.contacts.presentation.base_adapter.BaseItem
 import com.example.contacts.presentation.base_adapter.BaseViewHolder
 import com.example.contacts.presentation.base_adapter.ViewTypes
 
-class ContactViewHolder : BaseViewHolder {
+class ContactViewHolder (val fragmentNavigator: FragmentNavigator?) : BaseViewHolder {
 
     override val viewType: Int
         get() = ViewTypes.CONTACT_VIEW_HOLDER1.viewType
+
 
     override fun getViewHolder(itemView: View) = object : BaseViewHolder.ViewHolder(itemView) {
         val firstName: TextView = itemView.findViewById(R.id.tv_first_name)
@@ -31,7 +32,7 @@ class ContactViewHolder : BaseViewHolder {
             lastName.text = contact.lastName
             phoneNumber.text = contact.phoneNumber.toString()
             this.itemView.setOnClickListener {
-                //fragmentNavigator?.goFromContactListFragmentToContactFragment(item.id)
+                fragmentNavigator?.goFromContactListFragmentToContactFragment(item.id)
                 //viewModel?.savedSearchText = ""
             }
 

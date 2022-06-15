@@ -45,7 +45,9 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
 
-        val delegateAdapter = DelegateAdapter(ContactDiffCallback(), ContactViewHolder(), ContactViewHolder2())
+        val delegateAdapter = DelegateAdapter(ContactDiffCallback(),
+            ContactViewHolder(fragmentNavigator),
+            ContactViewHolder2(fragmentNavigator))
         val baseAdapter = com.example.contacts.presentation.base_adapter.BaseAdapter
         baseAdapter.addDelegateAdapter(delegateAdapter)
 
