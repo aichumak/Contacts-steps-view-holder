@@ -11,4 +11,6 @@
     <string name="confirm_dialog_positive_button">Remove</string>
     <string name="remove_canceled">Canceled</string>
     <string name="search">Search</string>
+
+    <string name="some_id">1</string>
 </resources>

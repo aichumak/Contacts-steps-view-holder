@@ -11,7 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contacts.R
 import com.example.contacts.databinding.FragmentContactListBinding
 import com.example.contacts.domain.Contact
+import com.example.contacts.presentation.base_adapter.BaseAdapter
 import com.example.contacts.presentation.base_adapter.DelegateAdapter
+import com.example.contacts.presentation.steps.Step
+import com.example.contacts.presentation.steps.StepsDelegateAdapter
+import com.example.contacts.presentation.steps.StepsDiffCallback
+import com.example.contacts.presentation.steps.StepsViewHolder
 import java.util.*
 
 class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
@@ -45,11 +50,19 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ContactListViewModel::class.java]
 
-        val delegateAdapter = DelegateAdapter(ContactDiffCallback(),
+        val baseAdapter = BaseAdapter
+
+        val delegateAdapter = DelegateAdapter(
+            ContactDiffCallback(),
             ContactViewHolder(fragmentNavigator),
-            ContactViewHolder2(fragmentNavigator))
-        val baseAdapter = com.example.contacts.presentation.base_adapter.BaseAdapter
-        baseAdapter.addDelegateAdapter(delegateAdapter)
+            ContactViewHolder2(fragmentNavigator)
+        )
+
+        val headerDelegateAdapter =
+            StepsDelegateAdapter(StepsDiffCallback(), StepsViewHolder(requireContext(), 5, false))
+        //val headerDelegateAdapter = DelegateAdapter(StepsDiffCallback(), StepsViewHolder(5, 0, true))
+        baseAdapter.addDelegateAdapter(headerDelegateAdapter)
+        //baseAdapter.addDelegateAdapter(delegateAdapter)
 
         binding?.let {
             it.rvContactList.layoutManager = LinearLayoutManager(context)
@@ -58,10 +71,22 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
             divider?.let { itDivider ->
                 it.rvContactList.addItemDecoration(ItemDecoration(itDivider))
             }
+            viewModel?.stepId(0)
+            it.button2.setOnClickListener {
+                viewModel?.stepId(viewModel?.stepsViewHolderId?.value?.stepId?.plus(1) ?: 0)
+            }
         }
         viewModel?.contactList?.observe(viewLifecycleOwner) {
             delegateAdapter.submitList(it)
         }
+        viewModel?.stepsViewHolderId?.observe(viewLifecycleOwner){
+            headerDelegateAdapter.submitList(listOf(it))
+            //headerDelegateAdapter.notifyItemChanged(it)
+            //headerDelegateAdapter.getItemViewType(it)
+            //headerDelegateAdapter.notifyDataSetChanged()
+            //binding?.rvContactList?.invalidate()
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

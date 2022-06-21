@@ -10,6 +10,8 @@
     <color name="yellow">#D9AD17</color>
     <color name="gray">#808080</color>
     <color name="blue">#0000CD</color>
-
+    <color name="green_active">#D92AA249</color>
+    <color name="green_default">#402AA249</color>
+    <color name="text_color">#FFFFFF</color>
 
 </resources>

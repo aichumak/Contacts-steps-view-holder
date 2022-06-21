@@ -19,7 +19,6 @@ class ContactViewHolder (val fragmentNavigator: FragmentNavigator?) : BaseViewHo
     override val viewType: Int
         get() = ViewTypes.CONTACT_VIEW_HOLDER1.viewType
 
-
     override fun getViewHolder(itemView: View) = object : BaseViewHolder.ViewHolder(itemView) {
         val firstName: TextView = itemView.findViewById(R.id.tv_first_name)
         val lastName: TextView = itemView.findViewById(R.id.tv_last_name)

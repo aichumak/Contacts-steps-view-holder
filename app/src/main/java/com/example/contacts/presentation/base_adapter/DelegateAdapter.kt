@@ -3,7 +3,7 @@ package com.example.contacts.presentation.base_adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
-class DelegateAdapter(
+open class DelegateAdapter(
     diffUtilCallback: BaseDiffUtil,
     vararg args: BaseViewHolder
 ) : androidx.recyclerview.widget.ListAdapter<BaseItem, BaseViewHolder.ViewHolder>(
