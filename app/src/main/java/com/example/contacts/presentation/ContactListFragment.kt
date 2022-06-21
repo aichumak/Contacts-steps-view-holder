@@ -81,10 +81,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         }
         viewModel?.stepsViewHolderId?.observe(viewLifecycleOwner){
             headerDelegateAdapter.submitList(listOf(it))
-            //headerDelegateAdapter.notifyItemChanged(it)
-            //headerDelegateAdapter.getItemViewType(it)
-            //headerDelegateAdapter.notifyDataSetChanged()
-            //binding?.rvContactList?.invalidate()
         }
 
     }

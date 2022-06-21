@@ -27,7 +27,7 @@ class StepsViewHolder(
 
     override fun getViewHolder(itemView: View) = object : BaseViewHolder.ViewHolder(itemView) {
 
-        @RequiresApi(Build.VERSION_CODES.M)
+
         override fun bind(item: BaseItem) {
             _binding = FragmentStepStatusLineBinding.bind(itemView)
             binding.root
@@ -49,7 +49,6 @@ class StepsViewHolder(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     fun getTextStepItemView(id: Int, isEnabled: Boolean): RelativeLayout {
         val relativeLayoutSideSize = dpToPx(16f)
         val relativeLayoutParams =
@@ -58,20 +57,23 @@ class StepsViewHolder(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
         )
+        val newRelativeLayout = RelativeLayout(context)
+        val newTextView = TextView(context)
+        val stepNumber = id + 1
 
         textViewLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
 
-        val newRelativeLayout = RelativeLayout(context)
         newRelativeLayout.layoutParams = relativeLayoutParams
         newRelativeLayout.id = id
         newRelativeLayout.setBackgroundResource(R.drawable.selector_step_item)
         newRelativeLayout.isEnabled = isEnabled
 
-        val newTextView = TextView(context)
         newTextView.layoutParams = textViewLayoutParams
-        newTextView.text = "${(id + 1)}"
+        newTextView.text = stepNumber.toString()
         newTextView.setLineSpacing(-2.0f, 1f)
-        newTextView.setTextAppearance(R.style.step_id)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            newTextView.setTextAppearance(R.style.step_id)
+        }
 
         newRelativeLayout.addView(newTextView)
 
@@ -131,5 +133,3 @@ class StepsViewHolder(
     ).toInt()
 
 }
-
-
