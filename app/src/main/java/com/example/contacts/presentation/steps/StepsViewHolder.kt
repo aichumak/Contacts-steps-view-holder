@@ -5,11 +5,10 @@ import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import com.example.contacts.R
-import com.example.contacts.databinding.FragmentStepStatusLineBinding
 import com.example.contacts.presentation.base_adapter.BaseItem
 import com.example.contacts.presentation.base_adapter.BaseViewHolder
 
@@ -19,37 +18,56 @@ class StepsViewHolder(
     private val lastStepIsDrawable: Boolean = false
 ) :
     BaseViewHolder {
-    private var _binding: FragmentStepStatusLineBinding? = null
-    private val binding get() = checkNotNull(_binding)
 
     override val viewType: Int
         get() = R.layout.fragment_step_status_line
 
     override fun getViewHolder(itemView: View) = object : BaseViewHolder.ViewHolder(itemView) {
 
-
         override fun bind(item: BaseItem) {
-            _binding = FragmentStepStatusLineBinding.bind(itemView)
-            binding.root
-            val stepStatusLine = binding.stepStatusLine
-            val step = item as Step
+            val stepStatusLine = itemView.findViewById<LinearLayout>(R.id.step_status_line)
+            val stepItem = item as Step
 
-            for (i in 0 until quantitySteps) {
-                val stepIsEnabled = step.stepId >= i
-                if (lastStepIsDrawable && i == quantitySteps - 1) {
-                    stepStatusLine.addView(getDrawableLineView(stepIsEnabled))
-                    stepStatusLine.addView(getDrawableStepItemView(i, stepIsEnabled))
-                } else {
-                    if (i != 0) {
-                        stepStatusLine.addView(getDrawableLineView(stepIsEnabled))
-                    }
-                    stepStatusLine.addView(getTextStepItemView(i, stepIsEnabled))
-                }
+            if (stepStatusLine.childCount > 0) {
+                recycleStepItemViews(stepStatusLine, stepItem.stepId)
+            } else {
+                addStepItemViews(stepStatusLine, stepItem.stepId)
             }
         }
     }
 
-    fun getTextStepItemView(id: Int, isEnabled: Boolean): RelativeLayout {
+    fun recycleStepItemViews(stepStatusLine: LinearLayout, stepId: Int) {
+        for (i in 0 until stepStatusLine.childCount) {
+            val stepStatusLineChild = stepStatusLine.getChildAt(i)
+            if (stepStatusLineChild.id <= stepId) {
+                stepStatusLineChild.isEnabled = true
+            } else {
+                break
+            }
+        }
+    }
+
+    fun addStepItemViews(stepStatusLine: LinearLayout, stepId: Int) {
+        for (i in 0 until quantitySteps) {
+            val stepIsEnabled = stepId >= i
+            val firstStepItem = i == 0
+            if (lastStepIsDrawable && i == quantitySteps - 1) {
+                stepStatusLine.addView(getDrawableLineView(stepIsEnabled))
+                stepStatusLine.addView(getDrawableStepItemView(i, stepIsEnabled, firstStepItem))
+            } else {
+                if (i != 0) {
+                    stepStatusLine.addView(getDrawableLineView(stepIsEnabled))
+                }
+                stepStatusLine.addView(getTextStepItemView(i, stepIsEnabled, firstStepItem))
+            }
+        }
+    }
+
+    private fun getTextStepItemView(
+        id: Int,
+        isEnabled: Boolean,
+        firstStepItem: Boolean
+    ): RelativeLayout {
         val relativeLayoutSideSize = dpToPx(16f)
         val relativeLayoutParams =
             RelativeLayout.LayoutParams(relativeLayoutSideSize, relativeLayoutSideSize)
@@ -80,7 +98,11 @@ class StepsViewHolder(
         return newRelativeLayout
     }
 
-    fun getDrawableStepItemView(id: Int, isEnabled: Boolean): RelativeLayout {
+    private fun getDrawableStepItemView(
+        id: Int,
+        isEnabled: Boolean,
+        firstStepItem: Boolean
+    ): RelativeLayout {
         val relativeLayoutSideSize = dpToPx(16f)
         val relativeLayoutParams =
             RelativeLayout.LayoutParams(relativeLayoutSideSize, relativeLayoutSideSize)
@@ -100,7 +122,7 @@ class StepsViewHolder(
         return newRelativeLayout
     }
 
-    fun getDrawableLineView(isEnabled: Boolean): RelativeLayout {
+    private fun getDrawableLineView(isEnabled: Boolean): RelativeLayout {
         val relativeLayoutWidthSize = dpToPx(26f)
         val relativeLayoutHeightSize = dpToPx(1f)
         val relativeLayoutPadding = dpToPx(2f)
