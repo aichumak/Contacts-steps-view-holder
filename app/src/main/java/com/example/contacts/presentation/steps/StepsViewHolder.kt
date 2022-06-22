@@ -69,9 +69,9 @@ class StepsViewHolder(
         id: Int,
         isEnabled: Boolean
     ): RelativeLayout {
-        val relativeLayoutSideSize = dpToPx(16f)
+        val relativeLayoutSideSize = context.resources.getDimension(R.dimen.default_side_size)
         val relativeLayoutParams =
-            RelativeLayout.LayoutParams(relativeLayoutSideSize, relativeLayoutSideSize)
+            RelativeLayout.LayoutParams(relativeLayoutSideSize.toInt(), relativeLayoutSideSize.toInt())
         val textViewLayoutParams = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -89,7 +89,10 @@ class StepsViewHolder(
 
         newTextView.layoutParams = textViewLayoutParams
         newTextView.text = stepNumber.toString()
-        newTextView.setLineSpacing(-2.0f, 1f)
+        newTextView.setLineSpacing(
+            context.resources.getDimension(R.dimen.current_line_spacing),
+            context.resources.getDimension(R.dimen.default_line_spacing)
+        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             newTextView.setTextAppearance(R.style.step_id)
@@ -104,9 +107,9 @@ class StepsViewHolder(
         id: Int,
         isEnabled: Boolean
     ): RelativeLayout {
-        val relativeLayoutSideSize = dpToPx(16f)
+        val relativeLayoutSideSize = context.resources.getDimension(R.dimen.default_side_size)
         val relativeLayoutParams =
-            RelativeLayout.LayoutParams(relativeLayoutSideSize, relativeLayoutSideSize)
+            RelativeLayout.LayoutParams(relativeLayoutSideSize.toInt(), relativeLayoutSideSize.toInt())
         val newRelativeLayout = RelativeLayout(context)
         val newImageView = ImageView(context)
 
@@ -124,11 +127,11 @@ class StepsViewHolder(
     }
 
     private fun getDrawableLineView(id: Int, isEnabled: Boolean): RelativeLayout {
-        val relativeLayoutWidthSize = dpToPx(26f)
-        val relativeLayoutHeightSize = dpToPx(16f)
-        val relativeLayoutPadding = dpToPx(2f)
+        val relativeLayoutWidthSize = context.resources.getDimension(R.dimen.drawable_line_width)
+        val relativeLayoutHeightSize = context.resources.getDimension(R.dimen.default_side_size)
+        val relativeLayoutPadding = context.resources.getDimension(R.dimen.default_padding_size)
         val relativeLayoutParams =
-            RelativeLayout.LayoutParams(relativeLayoutWidthSize, relativeLayoutHeightSize)
+            RelativeLayout.LayoutParams(relativeLayoutWidthSize.toInt(), relativeLayoutHeightSize.toInt())
         val imageViewLayoutParams = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -136,14 +139,13 @@ class StepsViewHolder(
         val newRelativeLayout = RelativeLayout(context)
         val newImageView = ImageView(context)
 
-
         imageViewLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
 
         newRelativeLayout.layoutParams = relativeLayoutParams
         newRelativeLayout.gravity = Gravity.CENTER
         newRelativeLayout.id = id
         newRelativeLayout.isEnabled = isEnabled
-        newRelativeLayout.setPadding(relativeLayoutPadding, 0, relativeLayoutPadding, 0)
+        newRelativeLayout.setPadding(relativeLayoutPadding.toInt(), 0, relativeLayoutPadding.toInt(), 0)
 
         newImageView.layoutParams = imageViewLayoutParams
         newImageView.setImageResource(R.drawable.selector_step_line)
@@ -153,10 +155,10 @@ class StepsViewHolder(
         return newRelativeLayout
     }
 
-    private fun dpToPx(dp: Float) = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        dp,
-        context.resources.displayMetrics
-    ).toInt()
+//    private fun dpToPx(dp: Float) = TypedValue.applyDimension(
+//        TypedValue.COMPLEX_UNIT_DIP,
+//        dp,
+//        context.resources.displayMetrics
+//    ).toInt()
 
 }

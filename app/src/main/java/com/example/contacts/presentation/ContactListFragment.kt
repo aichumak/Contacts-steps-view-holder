@@ -58,9 +58,9 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
             ContactViewHolder2(fragmentNavigator)
         )
 
-        val headerDelegateAdapter =
-            StepsDelegateAdapter(StepsDiffCallback(), StepsViewHolder(requireContext(), 7, true))
-        //val headerDelegateAdapter = DelegateAdapter(StepsDiffCallback(), StepsViewHolder(5, 0, true))
+        //val headerDelegateAdapter =
+        //    StepsDelegateAdapter(StepsDiffCallback(), StepsViewHolder(requireContext(), 7, true))
+        val headerDelegateAdapter = DelegateAdapter(StepsDiffCallback(), StepsViewHolder(requireContext(), 7, true))
         baseAdapter.addDelegateAdapter(headerDelegateAdapter)
         //baseAdapter.addDelegateAdapter(delegateAdapter)
 
