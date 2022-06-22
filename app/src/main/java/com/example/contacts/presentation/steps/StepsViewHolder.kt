@@ -2,7 +2,6 @@ package com.example.contacts.presentation.steps
 
 import android.content.Context
 import android.os.Build
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -71,13 +70,16 @@ class StepsViewHolder(
     ): RelativeLayout {
         val relativeLayoutSideSize = context.resources.getDimension(R.dimen.default_side_size)
         val relativeLayoutParams =
-            RelativeLayout.LayoutParams(relativeLayoutSideSize.toInt(), relativeLayoutSideSize.toInt())
+            RelativeLayout.LayoutParams(
+                relativeLayoutSideSize.toInt(),
+                relativeLayoutSideSize.toInt()
+            )
         val textViewLayoutParams = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
         )
         val newRelativeLayout = RelativeLayout(context)
-        val newTextView = TextView(context)
+        val newTextView = TextView(context) //, null, R.style.step_id)
         val stepNumber = id + 1
 
         textViewLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
@@ -96,6 +98,8 @@ class StepsViewHolder(
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             newTextView.setTextAppearance(R.style.step_id)
+        } else {
+            newTextView.setTextAppearance(context, R.style.step_id)
         }
 
         newRelativeLayout.addView(newTextView)
@@ -109,7 +113,10 @@ class StepsViewHolder(
     ): RelativeLayout {
         val relativeLayoutSideSize = context.resources.getDimension(R.dimen.default_side_size)
         val relativeLayoutParams =
-            RelativeLayout.LayoutParams(relativeLayoutSideSize.toInt(), relativeLayoutSideSize.toInt())
+            RelativeLayout.LayoutParams(
+                relativeLayoutSideSize.toInt(),
+                relativeLayoutSideSize.toInt()
+            )
         val newRelativeLayout = RelativeLayout(context)
         val newImageView = ImageView(context)
 
@@ -131,7 +138,10 @@ class StepsViewHolder(
         val relativeLayoutHeightSize = context.resources.getDimension(R.dimen.default_side_size)
         val relativeLayoutPadding = context.resources.getDimension(R.dimen.default_padding_size)
         val relativeLayoutParams =
-            RelativeLayout.LayoutParams(relativeLayoutWidthSize.toInt(), relativeLayoutHeightSize.toInt())
+            RelativeLayout.LayoutParams(
+                relativeLayoutWidthSize.toInt(),
+                relativeLayoutHeightSize.toInt()
+            )
         val imageViewLayoutParams = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -145,7 +155,12 @@ class StepsViewHolder(
         newRelativeLayout.gravity = Gravity.CENTER
         newRelativeLayout.id = id
         newRelativeLayout.isEnabled = isEnabled
-        newRelativeLayout.setPadding(relativeLayoutPadding.toInt(), 0, relativeLayoutPadding.toInt(), 0)
+        newRelativeLayout.setPadding(
+            relativeLayoutPadding.toInt(),
+            0,
+            relativeLayoutPadding.toInt(),
+            0
+        )
 
         newImageView.layoutParams = imageViewLayoutParams
         newImageView.setImageResource(R.drawable.selector_step_line)
