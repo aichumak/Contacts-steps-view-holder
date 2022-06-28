@@ -18,8 +18,7 @@ open class DelegateAdapter(
     ): BaseViewHolder.ViewHolder {
         for (viewHolder in viewHolders) {
             if (viewHolder.viewType == viewType) {
-                val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-                return viewHolder.getViewHolder(view)
+                return viewHolder.getViewHolder(parent)
             }
         }
         throw RuntimeException("Unknown viewType: $viewType")

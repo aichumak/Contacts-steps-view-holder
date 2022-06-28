@@ -60,9 +60,9 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
         //val headerDelegateAdapter =
         //    StepsDelegateAdapter(StepsDiffCallback(), StepsViewHolder(requireContext(), 7, true))
-        val headerDelegateAdapter = DelegateAdapter(StepsDiffCallback(), StepsViewHolder(requireContext(), 7, true))
-        baseAdapter.addDelegateAdapter(headerDelegateAdapter)
-        //baseAdapter.addDelegateAdapter(delegateAdapter)
+        //val headerDelegateAdapter = DelegateAdapter(StepsDiffCallback(), StepsViewHolder(requireContext(), 7, true))
+        //baseAdapter.addDelegateAdapter(headerDelegateAdapter)
+        baseAdapter.addDelegateAdapter(delegateAdapter)
 
         binding?.let {
             it.rvContactList.layoutManager = LinearLayoutManager(context)
@@ -83,7 +83,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
             delegateAdapter.submitList(it)
         }
         viewModel?.stepsViewHolderId?.observe(viewLifecycleOwner){
-            headerDelegateAdapter.submitList(listOf(it))
+            //headerDelegateAdapter.submitList(listOf(it))
         }
 
     }

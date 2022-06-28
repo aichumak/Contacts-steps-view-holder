@@ -3,12 +3,16 @@ package com.example.contacts.presentation.steps
 import android.content.Context
 import android.os.Build
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.contacts.R
+import com.example.contacts.databinding.FragmentContactBinding
+import com.example.contacts.databinding.FragmentStepStatusLineBinding
 import com.example.contacts.presentation.base_adapter.BaseItem
 import com.example.contacts.presentation.base_adapter.BaseViewHolder
 
@@ -22,8 +26,14 @@ class StepsViewHolder(
     override val viewType: Int
         get() = R.layout.fragment_step_status_line
 
-    override fun getViewHolder(itemView: View) = object : BaseViewHolder.ViewHolder(itemView) {
-
+    override fun getViewHolder(parent: ViewGroup): BaseViewHolder.ViewHolder {
+        val binding =
+            FragmentStepStatusLineBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        return object : BaseViewHolder.ViewHolder(binding.root){
         override fun bind(item: BaseItem) {
             val stepStatusLine = itemView.findViewById<LinearLayout>(R.id.step_status_line)
             val stepItem = item as Step
@@ -33,6 +43,7 @@ class StepsViewHolder(
             } else {
                 addStepItemViews(stepStatusLine, stepItem.stepId)
             }
+        }
         }
     }
 
